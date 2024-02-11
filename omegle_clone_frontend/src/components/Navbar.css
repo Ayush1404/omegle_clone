@@ -1,0 +1,25 @@
+/* Navbar.css */
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #fff; /* Set background color to white */
+  }
+  
+  .logo img {
+    height: 40px; /* Increase the height of the logo */
+  }
+  
+  .title {
+    flex-grow: 1; /* Allow the title to grow and take up remaining space */
+    text-align: center; /* Center align the title */
+  }
+  
+  .title h2 {
+    color: #000; /* Set title color to black */
+    font-size: 20px; /* Reduce the font size of the title */
+    margin: 0; /* Remove any default margin */
+  }
+  
