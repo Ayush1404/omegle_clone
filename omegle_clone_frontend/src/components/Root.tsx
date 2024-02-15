@@ -56,7 +56,7 @@ const Root = () => {
                             setName(e.target.value)
                         }} />
                         <button type="button" className="btn btn-primary" onClick={() => {
-                            setJoined(true)
+                            if(name!="")setJoined(true)
                         }}>
                             Join
                         </button>
