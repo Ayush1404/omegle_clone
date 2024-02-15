@@ -183,16 +183,18 @@ const Room = ({
                         })
                         _socket.on('candidateForUser1',async ({roomId,candidate})=>{
                             await peerConnection.addIceCandidate(candidate)
+                            console.log("roomID:",roomId)
                             console.log("======Added Ice Candidate for user 1======")
                             console.log("candidate:",candidate)      
                         })
-                        _socket.on('candidateForUser2',async ({roomId,candidate})=>{    
+                        _socket.on('candidateForUser2',async ({roomId,candidate})=>{
+                            console.log("roomID:",roomId)    
                             await peerConnection.addIceCandidate(candidate)
                             console.log("======Added Ice Candidate for user 2======")
                             console.log("candidate:",candidate)      
                         })
                         _socket.on('answer', async ({roomId,sdp})=>{
-                            
+                            console.log("roomID:",roomId)
                             if(remoteVideoRef && remoteVideoRef.current)
                                 remoteVideoRef.current.srcObject = remoteMediaStream;
                             else console.log("error is here")
