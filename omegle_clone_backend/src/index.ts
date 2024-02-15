@@ -12,6 +12,7 @@ const io = new Server(server ,{
 });
 
 app.get('/', (req, res) => {
+  res.send("server is runnning")
 });
 
 const userManager =new UserManager();
