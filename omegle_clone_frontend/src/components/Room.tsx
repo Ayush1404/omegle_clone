@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 import { Socket, io } from "socket.io-client";
 import ChatBox from "./ChatBox";
+import Navbar from "./Navbar";
 export interface Message {
     roomId:number,
     data:string,
@@ -13,6 +14,17 @@ const servers = {
         }
     ]
 }
+
+const nonHideElementStyle: CSSProperties = {
+    position: 'static',
+    left: 'auto'
+  };
+  
+  const hideElementStyle: CSSProperties = {
+    position: 'absolute',
+    left: '-9999px'
+  };
+  
 const URL="ws://localhost:3001"
 const Room = ({
         name,
@@ -197,6 +209,11 @@ const Room = ({
                                 remoteMediaStream.removeTrack(track);
                             })
                         })
+                        _socket.on('loop-next',()=>{
+                            setIncall(false)
+                            setChatbox([]);
+                            setIncall(true)
+                        })
                         _socket.on('update-chatbox',({chatbox})=>{
                             
                             console.log(chatbox)
@@ -241,52 +258,71 @@ const Room = ({
         }
         init()
     },[])
-
+    
     return (
         <div>
-            <div style={{ visibility: incall===true?'hidden':'visible' }}> Waiting to connect you to someone</div>
-            <video autoPlay playsInline ref={localVideoRef} height={400} width={400} ></video>
-            
-            <div style={{ visibility: incall===true?'visible':'hidden' }}>
-            <video autoPlay playsInline ref={remoteVideoRef} height={400} width={400} ></video>
-                    <div>
-                        <button onClick={()=>{
-                            socket?.disconnect()
-                            setJoined(false)
-                        }}>
-                            END CALL
-                        </button>
-                        <button onClick={()=>{
-                            socket?.emit("next",{roomId})
-                            setIncall(false)
-                            setChatbox([])
-                        }}>
-                            NEXT
-                        </button>
+        
+            <Navbar></Navbar>
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-6 col-sm-12 " style={{position : "relative"}}>
+                        <video autoPlay playsInline ref={localVideoRef} height={'auto'} width={400} ></video>
+                        <video
+                            style={incall ? nonHideElementStyle : hideElementStyle}
+                            autoPlay
+                            playsInline
+                            ref={remoteVideoRef}
+                            height={'auto'}
+                            width={400}
+                            ></video>
+                        <div style={incall ? hideElementStyle : nonHideElementStyle}> Waiting to connect you to someone</div>                  
                     </div>
-                    <div><input
-                        type="text"
-                        value={newMessage.data}
-                        onChange={(e)=>{
-                            setNewMessage(
-                                {
-                                    roomId,
-                                    data:e.target.value,
-                                    senderName:name,
-                                }
-                            )
-                        }}      
-                    ></input>
-                    <button onClick={()=>{
-                        sendMessage();
-                    }}>
-                        Send 
-                    </button>
-                    <ChatBox chatbox={chatbox}/>
+                    <div className="col-lg-6 col-sm-12 ">
+                        <div style={incall ? nonHideElementStyle : hideElementStyle}>   
+                            <div className="card">
+                                <div className="card-body">
+                                    <div className="chatbox mt-3">
+                                        <ChatBox chatbox={chatbox} />
+                                    </div>
+                                    <div className="input-group mt-3">
+                                        <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Type your message..."
+                                        value={newMessage.data}
+                                        onChange={(e) => {
+                                            setNewMessage({
+                                            roomId,
+                                            data: e.target.value,
+                                            senderName: name,
+                                            });
+                                        }}
+                                        />
+                                        <div className="input-group-append">
+                                            <button className="btn btn-success" onClick={() => sendMessage()}>
+                                                Send
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="d-flex justify-content-between mt-3">
+                                        <button className="btn btn-danger" onClick={() => {
+                                            socket?.disconnect();
+                                            setJoined(false);
+                                            }}>END CALL
+                                        </button>
+                                        <button className="btn btn-primary" onClick={() => {
+                                            socket?.emit("next", { roomId });
+                                            setIncall(false);
+                                            setChatbox([]);
+                                            }}>NEXT
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                 
+                </div>
             </div>
-            
         </div>
         
     )

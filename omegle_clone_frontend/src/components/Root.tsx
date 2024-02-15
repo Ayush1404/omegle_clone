@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react"
 import Room from "./Room";
-import Room2 from "./Room2";
 import Navbar from "./Navbar";
 
 const Root = () => {
@@ -39,7 +38,7 @@ const Root = () => {
 
   if(!joined)
   return (
-      <div className="set-your-hair-screen">
+    <div className="set-your-hair-screen mb-5">
         <Navbar></Navbar>
         <div className="container">
             <div className="row">
@@ -50,7 +49,7 @@ const Root = () => {
                 <div className="col-lg-6 col-sm-12 mt-5">
                     <h4>Welcome! <br/></h4>
                     <p className="welcome-para text-muted">
-                        This is a clone of omegle a famous video chat web using webRTC. You can join the lobby of random people by clicking join below after entering name .
+                        This is a clone of omegle a famous video chat web using webRTC. You can join the lobby of random people by clicking join below after entering name.
                     </p>
                     <div className="d-inline-flex">
                         <input type="text" className="form-control" placeholder="Name" onChange={(e) => {
@@ -64,18 +63,9 @@ const Root = () => {
                     </div>
                 </div>
             </div>
-            </div>
-        
-        
-      </div>
+        </div>
+    </div>
     );
-return(
-    <>
-    <Room2
-    ></Room2>
-    </>
-    
-)
 return(
     <>
     <Room
