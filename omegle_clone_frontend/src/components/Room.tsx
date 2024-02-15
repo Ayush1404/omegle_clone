@@ -25,7 +25,7 @@ const nonHideElementStyle: CSSProperties = {
     left: '-9999px'
   };
   
-const URL="ws://localhost:3001"
+const URL="ws://https://omegle-clone-amber.vercel.app:3000"
 const Room = ({
         name,
         localMediaStream,
