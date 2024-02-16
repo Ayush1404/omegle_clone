@@ -26,4 +26,8 @@ io.on('connection', (socket) => {
   });
 });
 
+server.listen(port, () => {
+  console.log('server running at port 3000');
+});
+
 export default server;
