@@ -5,7 +5,11 @@ import { UserManager } from './managers/userManager';
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server ,{
+  cors:{
+    origin:"*"
+  }
+});
 
 const port = process.env.PORT || 3000;
 
