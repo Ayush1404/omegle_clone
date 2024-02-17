@@ -60,6 +60,7 @@ const Room = ({
         return new Promise<void>(async(resolve, reject)=>{
             try{
                 const _socket = io(URL,{
+                    transports: ['websocket'],
                     query:{
                         name
                     }
