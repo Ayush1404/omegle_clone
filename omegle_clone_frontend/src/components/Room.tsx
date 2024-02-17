@@ -25,7 +25,7 @@ const nonHideElementStyle: CSSProperties = {
     left: '-9999px'
   };
   
-const URL="https://omegle-clone-backend-c7pt.onrender.com"
+const URL="omegle-clone-backend-c7pt.onrender.com"
 const Room = ({
         name,
         localMediaStream,
