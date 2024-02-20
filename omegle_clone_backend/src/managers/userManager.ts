@@ -42,17 +42,24 @@ export class UserManager{
         const room = this.roomManager.getRoom(roomId);
         if(room)
         {
+            
             const user1=room.user1;
             const user2=room.user2;
+            if(this.queue.length===0) {
+                user1.socket.emit("loop-next");
+                user2.socket.emit("loop-next");
+                return;
+            }
             if(user1.socket.id === socketId){
                 user2.socket.emit("peer-disconnected")
             }
             if(user2.socket.id === socketId){
                 user1.socket.emit("peer-disconnected")
             }
-            this.queue.unshift(user1.socket.id)
-            this.queue.push(user2.socket.id)
+            this.queue.unshift(user2.socket.id)
+            this.queue.push(user1.socket.id)
             this.roomManager.deleteRoom(roomId)
+            
             this.matchUsers()
         }
     }
